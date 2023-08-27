@@ -1,0 +1,4 @@
+name: StatsRedirect
+version: '${version}'
+main: org.sunik.statsredirect.StatsRedirect
+api-version: '1.16'
