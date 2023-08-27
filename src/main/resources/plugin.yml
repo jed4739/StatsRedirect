@@ -2,3 +2,7 @@ name: StatsRedirect
 version: '${version}'
 main: org.sunik.statsredirect.StatsRedirect
 api-version: '1.16'
+commands:
+  스탯:
+    description: 스탯 관련 기능입니다.
+    usage: /스탯
