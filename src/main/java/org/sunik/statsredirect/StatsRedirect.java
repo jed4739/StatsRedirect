@@ -9,9 +9,4 @@ public final class StatsRedirect extends JavaPlugin {
         // Plugin startup logic
 
     }
-
-    @Override
-    public void onDisable() {
-        // Plugin shutdown logic
-    }
 }

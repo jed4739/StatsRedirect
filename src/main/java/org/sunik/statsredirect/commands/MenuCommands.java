@@ -1,2 +1,4 @@
-package org.sunik.statsredirect.commands;public class MenuCommands {
+package org.sunik.statsredirect.commands;
+
+public class MenuCommands {
 }
