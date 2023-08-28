@@ -56,16 +56,18 @@ public class InventoryHandler implements Listener {
 
         // 손의 아이템 제거
         event.setCurrentItem(null);
-
         addHealth(player);
+
+        player.performCommand("stats");
     }
 
     private void addHealth(Player p) {
         int healthToAdd = 1;
-        p.sendMessage(ChatColor.GREEN + "체력이 " + healthToAdd + " 추가되었습니다.");
+        p.sendMessage(ChatColor.GREEN + "체력 스탯 " + healthToAdd + "을 추가하였습니다.");
+        plugin.getLogger().info((ChatColor.RED + p.getName()) + "님이 체력 스텟을 올렸습니다.");
 
         // 추가할 체력
-        double addedMaxHealth = 2.0;
+        double addedMaxHealth = 1.0;
         HealthUtils.addMaxHealth(p, addedMaxHealth);
     }
 }

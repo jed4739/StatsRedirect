@@ -20,8 +20,13 @@ public class MenuCommands implements CommandExecutor {
                 plugin.infoMessage(p);
                 return true;
             }
-            if (label.equalsIgnoreCase("스탯")) {
+            if (label.equalsIgnoreCase("stats")) {
                 plugin.openStatInventory(p); // 스탯 가상 인벤토리 열기
+                return true;
+            }
+            if (label.equalsIgnoreCase("heal")) {
+                plugin.openStatInventory(p);
+                return true;
             }
         } else sender.sendMessage("플레이어만 사용할 수 있는 명령어입니다.");
         return false;

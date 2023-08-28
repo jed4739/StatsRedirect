@@ -1,8 +1,14 @@
 name: StatsRedirect
-version: '${version}'
+version: 1.0
 main: org.sunik.statsredirect.StatsRedirect
 api-version: '1.16'
 commands:
-  스탯:
+  stats:
     description: 스탯 관련 기능입니다.
-    usage: /스탯
+    usage: /stats
+  statslist:
+    description: 명령어 리스트입니다.
+    usage: /statslist
+  heal:
+    description: 모든 디버프 해제 및 회복합니다.
+    usage: /heal

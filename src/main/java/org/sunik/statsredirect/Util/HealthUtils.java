@@ -10,9 +10,12 @@ public class HealthUtils {
             player.setHealth(maxHealth);
         }
     }
+    public static double getMaxHealth(Player player) {
+        return player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
+    }
 
     public static void addMaxHealth(Player player, double amount) {
-        double currentMaxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
+        double currentMaxHealth = getMaxHealth(player);
         setMaxHealth(player, currentMaxHealth + amount);
     }
 }
