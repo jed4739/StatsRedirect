@@ -27,25 +27,21 @@ public class InventoryHandler implements Listener {
         Inventory clickedInventory = event.getClickedInventory();
         int slot = event.getSlot(); // 클릭한 슬롯 번호
 
-        // 클릭된 인벤토리가 없으면 무시
-        if (clickedInventory == null) {
+        // 클릭된 인벤토리가 없거나 인벤토리가 플레이어의 열린 상단 인벤토리와 다를 경우 무시
+        if (clickedInventory == null || !clickedInventory.equals(player.getOpenInventory().getTopInventory())) {
             return;
         }
 
-        // 클릭된 인벤토리가 플레이어의 열린 상단 인벤토리와 다를 경우 무시
-        if (!clickedInventory.equals(player.getOpenInventory().getTopInventory())) {
-            return;
-        }
-
-        ItemStack clickedItem = event.getCurrentItem(); // 클릭된 아이템
-        // 클릭된 아이템이 없거나 초록색 유리 판이 아닌 경우 무시
-        if (clickedItem == null || clickedItem.getType() != Material.GREEN_STAINED_GLASS_PANE) {
-            return;
-        }
-
-        ItemMeta itemMeta = clickedItem.getItemMeta(); // 클릭된 아이템의 메타 데이터
-        // 클릭된 아이템의 메타 데이터가 없거나 이름이 "체력"이 아닌 경우 무시
-        if (itemMeta == null || !itemMeta.getDisplayName().equals(ChatColor.GREEN + "체력")) {
+        // 클릭된 아이템
+        ItemStack clickedItem = event.getCurrentItem();
+        // 클릭된 아이템의 메타 데이터
+        ItemMeta itemMeta = clickedItem.getItemMeta();
+        // 클릭한 아이템 이름이 (힘, 체력, 민첩, 행운) 이고 아이템 종류가 (빨강, 초록, 하늘, 노랑)색 유리판 이 아닐 경우 무시
+        boolean str = itemMeta.getDisplayName().equals(ChatColor.RED + (ChatColor.BOLD + "힘")) && clickedItem.getType() != Material.RED_STAINED_GLASS_PANE;
+        boolean con = itemMeta.getDisplayName().equals(ChatColor.GREEN + (ChatColor.BOLD + "체력")) && clickedItem.getType() != Material.GREEN_STAINED_GLASS_PANE;
+        boolean dex = itemMeta.getDisplayName().equals(ChatColor.AQUA + (ChatColor.BOLD + "민첩")) && clickedItem.getType() != Material.LIGHT_BLUE_STAINED_GLASS_PANE;
+        boolean luck = itemMeta.getDisplayName().equals(ChatColor.GOLD + (ChatColor.BOLD + "행운")) && clickedItem.getType() != Material.YELLOW_STAINED_GLASS_PANE;
+        if (str && con && dex && luck) {
             return;
         }
 
@@ -56,18 +52,40 @@ public class InventoryHandler implements Listener {
 
         // 손의 아이템 제거
         event.setCurrentItem(null);
-        addHealth(player);
-
-        player.performCommand("stats");
+        if (str) {
+            addStr();
+            player.performCommand("stats");
+        } else if (con) {
+            addCon(player);
+            player.performCommand("stats");
+        } else if (dex) {
+            addDex();
+            player.performCommand("stats");
+        } else if (luck) {
+            addLuck();
+            player.performCommand("stats");
+        }
     }
 
-    private void addHealth(Player p) {
+    private void addStr() {
+
+    }
+
+    private void addCon(Player p) {
         int healthToAdd = 1;
         p.sendMessage(ChatColor.GREEN + "체력 스탯 " + healthToAdd + "을 추가하였습니다.");
-        plugin.getLogger().info((ChatColor.RED + p.getName()) + "님이 체력 스텟을 올렸습니다.");
+        plugin.getLogger().info(p.getName() + "님이 체력 스텟을 올렸습니다.");
 
         // 추가할 체력
         double addedMaxHealth = 1.0;
         HealthUtils.addMaxHealth(p, addedMaxHealth);
+    }
+
+    private void addDex() {
+
+    }
+
+    private void addLuck() {
+
     }
 }
