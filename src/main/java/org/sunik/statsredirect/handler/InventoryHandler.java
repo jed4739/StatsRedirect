@@ -2,7 +2,6 @@ package org.sunik.statsredirect.handler;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,7 +10,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.sunik.statsredirect.StatsRedirect;
-import org.sunik.statsredirect.Util.HealthUtils;
+import org.sunik.statsredirect.Util.Stats;
 
 public class InventoryHandler implements Listener {
     private final StatsRedirect plugin;
@@ -24,7 +23,6 @@ public class InventoryHandler implements Listener {
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
         Inventory clickedInventory = event.getClickedInventory();
-        int slot = event.getSlot();
         if (clickedInventory == null || !clickedInventory.equals(player.getOpenInventory().getTopInventory())) {
             return;
         }
@@ -75,13 +73,8 @@ public class InventoryHandler implements Listener {
     }
 
     private void addCon(Player p) {
-        int healthToAdd = 1;
-        p.sendMessage(ChatColor.GREEN + "체력 스탯 " + healthToAdd + "을 추가하였습니다.");
+        Stats.conEffect(p);
         plugin.getLogger().info(p.getName() + "님이 체력 스텟을 올렸습니다.");
-
-        // 추가할 체력
-        double addedMaxHealth = 1.0;
-        HealthUtils.addMaxHealth(p, addedMaxHealth);
     }
 
     private void addDex() {
