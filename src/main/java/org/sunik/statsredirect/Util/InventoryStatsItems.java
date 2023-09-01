@@ -31,7 +31,6 @@ public class InventoryStatsItems {
         healthItemMeta.setDisplayName(ChatColor.GREEN + (ChatColor.BOLD + "체력"));
         ArrayList<String> lore = new ArrayList<>();
         lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "체력:") + " " + (ChatColor.WHITE + "10"));
-        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "체력 리젠:") + " " + (ChatColor.WHITE + "0.25"));
         lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "체력 흡수:") + " " + (ChatColor.WHITE + "0.1"));
         lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "넉백 저항:") + " " + (ChatColor.WHITE + "0.5"));
         lore.add(ChatColor.LIGHT_PURPLE + "현재 스텟: ");
