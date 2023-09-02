@@ -14,8 +14,8 @@ import org.sunik.statsredirect.service.CommandService;
 
 public class MenuCommands implements CommandExecutor {
     private final JavaPlugin plugin;
-    public MenuCommands(StatsRedirect statsRedirect) {
-        this.plugin = statsRedirect;
+    public MenuCommands(JavaPlugin plugin) {
+        this.plugin = plugin;
     }
 
     @Override
@@ -27,8 +27,10 @@ public class MenuCommands implements CommandExecutor {
                 return true;
             }
             if (label.equalsIgnoreCase("stats")) {
-                if (p.isOp() && args[0] == "reset") {
-                    CommandService.statsReset(p, args, plugin);
+                if (args.length > 0) {
+                    if (p.isOp() && args[0].equals("reset")) {
+                        CommandService.statsReset(p, args, plugin);
+                    }
                 }
                 CommandService.openStatInventory(p); // 스탯 가상 인벤토리 열기
                 return true;
