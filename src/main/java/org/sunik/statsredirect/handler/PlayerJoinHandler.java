@@ -8,8 +8,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.sunik.statsredirect.Util.HealthUtils;
 import org.sunik.statsredirect.Util.JsonParseUtils;
+import org.sunik.statsredirect.Util.PlayerUtils;
 
 import java.io.File;
 
@@ -57,9 +57,7 @@ public class PlayerJoinHandler implements Listener {
             player.setExp(xp);
             player.setLevel(level);
             // con
-
+            PlayerUtils.modifyPlayerAttribute(player, Attribute.GENERIC_KNOCKBACK_RESISTANCE, 0.25 * constitution);
         }
     }
-
-
 }

@@ -1,6 +1,7 @@
 package org.sunik.statsredirect.commands;
 
-import org.bukkit.ChatColor;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -8,9 +9,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.sunik.statsredirect.StatsRedirect;
 import org.sunik.statsredirect.Util.HealthUtils;
+import org.sunik.statsredirect.Util.JsonParseUtils;
 import org.sunik.statsredirect.service.CommandService;
+
+import java.io.File;
 
 public class MenuCommands implements CommandExecutor {
     private final JavaPlugin plugin;
@@ -27,12 +30,9 @@ public class MenuCommands implements CommandExecutor {
                 return true;
             }
             if (label.equalsIgnoreCase("stats")) {
-                if (args.length > 0) {
-                    if (p.isOp() && args[0].equals("reset")) {
-                        CommandService.statsReset(p, args, plugin);
-                    }
-                }
-                CommandService.openStatInventory(p); // 스탯 가상 인벤토리 열기
+                File playerFile = new File(plugin.getDataFolder() + "/userData", p.getName() + ".json");
+                JsonObject playerData = JsonParseUtils.loadPlayerData(playerFile, new Gson());
+                CommandService.openStatInventory(p, playerData); // 스탯 가상 인벤토리 열기
                 return true;
             }
             if (label.equalsIgnoreCase("heal") && p.isOp()) {

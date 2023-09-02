@@ -1,56 +1,37 @@
 package org.sunik.statsredirect.service;
 
-import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.sunik.statsredirect.Util.InventoryStatsItems;
 
-import java.io.File;
-
 public class CommandService {
-    public static void statsReset(Player p, String[] args, JavaPlugin plugin) {
-        if (args[1] == null) {
-            p.sendMessage(ChatColor.RED + "초기화 대상을 지정해주세요.");
-            p.sendMessage(ChatColor.RED + "/stats reset <player> <statsType>(all, str, con, dex, luck, level, point)");
-        } else if (args[2] == null) {
-            p.sendMessage(ChatColor.RED + "초기화 스텟을 지정해주세요.");
-            p.sendMessage(ChatColor.RED + "/stats reset <player> <statsType>(all, str, con, dex, luck, level, point)");
-        }
-        Gson gson = new Gson();
-        File playerFile = new File(plugin.getDataFolder() + "/userData", args[1] + ".json");
-//        playerFile.exz
-        // 추가기능
-    }
-
     // 스탯 가상 인벤토리 열기
-    public static void openStatInventory(Player player) {
+    public static void openStatInventory(Player player, JsonObject playerData) {
         // 슬롯 사이즈
         int size = 27;
-
         Inventory inventory = Bukkit.createInventory(player, size, "스탯");
         InventoryStatsItems items = new InventoryStatsItems();
-
         // 가상 인벤토리 구성
         for (int i = 0; i < size; i++) {
             switch (i) {
                 case 10:
                     // 2번째줄 2번째 칸에 체력 아이템 추가
-                    inventory.setItem(i, items.createStrengthItem());
+                    inventory.setItem(i, items.createStrengthItem(playerData.get("str").getAsInt()));
                     break;
                 case 12:
                     // 2번째줄 4번째 칸에 체력 아이템 추가
-                    inventory.setItem(i, items.createHealthItem());
+                    inventory.setItem(i, items.createConItem(playerData.get("con").getAsInt()));
                     break;
                 case 14:
                     // 2번째줄 6번째 칸에 체력 아이템 추가
-                    inventory.setItem(i, items.createDexItem());
+                    inventory.setItem(i, items.createDexItem(playerData.get("dex").getAsInt()));
                     break;
                 case 16:
                     // 2번째줄 8번째 칸에 체력 아이템 추가
-                    inventory.setItem(i, items.createLuckItem());
+                    inventory.setItem(i, items.createLuckItem(playerData.get("luck").getAsInt()));
                     break;
                 default:
                     inventory.setItem(i, items.createEmptyGlassItem());
