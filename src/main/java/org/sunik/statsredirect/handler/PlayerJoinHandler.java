@@ -2,6 +2,7 @@ package org.sunik.statsredirect.handler;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -56,6 +57,7 @@ public class PlayerJoinHandler implements Listener {
             player.setExp(xp);
             player.setLevel(level);
             // con
+
         }
     }
 

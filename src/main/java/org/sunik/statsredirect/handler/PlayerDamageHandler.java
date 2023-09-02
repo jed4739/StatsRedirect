@@ -2,10 +2,12 @@ package org.sunik.statsredirect.handler;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.sunik.statsredirect.Util.HealthUtils;
 import org.sunik.statsredirect.Util.JsonParseUtils;
@@ -43,4 +45,5 @@ public class PlayerDamageHandler implements Listener {
             player.setHealth(resultHealth);
         }
     }
+
 }
