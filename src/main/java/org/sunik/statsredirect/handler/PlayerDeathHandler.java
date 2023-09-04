@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -43,8 +44,16 @@ public class PlayerDeathHandler implements Listener {
             float xp = playerData.get("xp").getAsFloat();
             int point = playerData.get("point").getAsInt();
 
-            double resultHp = 100.0 + (10.0 * constitution);
+            // HP (str, con)
+            double resultHp = 100.0 + (10.0 * constitution) + (2.0 * strength);
             HealthUtils.setMaxHealth(player, resultHp);
+
+            // effects
+            PlayerUtils.modifyPlayerAttribute(player, Attribute.GENERIC_KNOCKBACK_RESISTANCE, 0.25 * constitution);
+            PlayerUtils.modifyPlayerAttribute(player, Attribute.GENERIC_ATTACK_DAMAGE, 1.0 + (1.0 * strength));
+            PlayerUtils.modifyPlayerAttribute(player, Attribute.GENERIC_ARMOR, 0.25 * strength);
+            PlayerUtils.modifyPlayerAttribute(player, Attribute.GENERIC_ATTACK_SPEED, 4.0 + (0.03 * playerData.get("dex").getAsInt()));
+            PlayerUtils.modifyPlayerAttribute(player, Attribute.GENERIC_MOVEMENT_SPEED, 0.10000000149011612 + (0.00003 * playerData.get("dex").getAsInt()));
 
             player.setExp(xp);
             player.setLevel(level);

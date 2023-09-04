@@ -56,8 +56,12 @@ public class PlayerJoinHandler implements Listener {
             // 스텟 적용
             player.setExp(xp);
             player.setLevel(level);
-            // con
+            // effects
             PlayerUtils.modifyPlayerAttribute(player, Attribute.GENERIC_KNOCKBACK_RESISTANCE, 0.25 * constitution);
+            PlayerUtils.modifyPlayerAttribute(player, Attribute.GENERIC_ATTACK_DAMAGE, 1.0 + (1.0 * strength));
+            PlayerUtils.modifyPlayerAttribute(player, Attribute.GENERIC_ARMOR, 0.25 * strength);
+            PlayerUtils.modifyPlayerAttribute(player, Attribute.GENERIC_ATTACK_SPEED, 4.0 + (0.03 * playerData.get("dex").getAsInt()));
+            PlayerUtils.modifyPlayerAttribute(player, Attribute.GENERIC_MOVEMENT_SPEED, 0.10000000149011612 + (0.00003 * playerData.get("dex").getAsInt()));
         }
     }
 }

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,6 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.sunik.statsredirect.StatsRedirect;
 import org.sunik.statsredirect.Util.HealthUtils;
 import org.sunik.statsredirect.Util.JsonParseUtils;
+import org.sunik.statsredirect.Util.PlayerUtils;
 
 import java.io.File;
 
@@ -55,7 +57,7 @@ public class InventoryHandler implements Listener {
 
         if (str) {
             event.setCurrentItem(null);
-            addStr();
+            addStr(player);
             player.performCommand("stats");
         } else if (con) {
             event.setCurrentItem(null);
@@ -63,11 +65,11 @@ public class InventoryHandler implements Listener {
             player.performCommand("stats");
         } else if (dex) {
             event.setCurrentItem(null);
-            addDex();
+            addDex(player);
             player.performCommand("stats");
         } else if (luck) {
             event.setCurrentItem(null);
-            addLuck();
+            addLuck(player);
             player.performCommand("stats");
         } else if (itemMeta.getDisplayName().equalsIgnoreCase(" ") && clickedItem.getType() == Material.WHITE_STAINED_GLASS_PANE) {
             event.setCurrentItem(null);
@@ -75,8 +77,26 @@ public class InventoryHandler implements Listener {
         }
     }
 
-    private void addStr() {
+    private void addStr(Player p) {
+        // 추가할 체력
+        double addedMaxHealth = 2.0;
+        HealthUtils.addMaxHealth(p, addedMaxHealth);
 
+        File playerFile = new File(plugin.getDataFolder() + "/userData", p.getName() + ".json");
+        if (!playerFile.exists()) {
+            return;
+        }
+        JsonObject playerData = JsonParseUtils.loadPlayerData(playerFile, gson);
+        int oldStr = playerData.get("str").getAsInt();
+        playerData.addProperty("str", ++oldStr);
+        JsonParseUtils.modifyPlayerData(playerFile, gson, playerData);
+
+        PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_ATTACK_DAMAGE, 1.0 + (1.0 * playerData.get("str").getAsInt()));
+        PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_ARMOR, 0.25 * playerData.get("str").getAsInt());
+
+        int healthToAdd = 1;
+        p.sendMessage(ChatColor.GREEN + "힘 스탯 " + healthToAdd + "을 추가하였습니다.");
+        plugin.getLogger().info(p.getName() + "님이 힘 스텟을 올렸습니다.");
     }
 
     private void addCon(Player p) {
@@ -93,16 +113,32 @@ public class InventoryHandler implements Listener {
         playerData.addProperty("con", ++oldCon);
         JsonParseUtils.modifyPlayerData(playerFile, gson, playerData);
 
+        PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_KNOCKBACK_RESISTANCE, 0.25 * playerData.get("con").getAsInt());
+
         int healthToAdd = 1;
         p.sendMessage(ChatColor.GREEN + "체력 스탯 " + healthToAdd + "을 추가하였습니다.");
         plugin.getLogger().info(p.getName() + "님이 체력 스텟을 올렸습니다.");
     }
 
-    private void addDex() {
+    private void addDex(Player p) {
+        File playerFile = new File(plugin.getDataFolder() + "/userData", p.getName() + ".json");
+        if (!playerFile.exists()) {
+            return;
+        }
+        JsonObject playerData = JsonParseUtils.loadPlayerData(playerFile, gson);
+        int oldDex = playerData.get("dex").getAsInt();
+        playerData.addProperty("dex", ++oldDex);
+        JsonParseUtils.modifyPlayerData(playerFile, gson, playerData);
 
+        PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_ATTACK_SPEED, 4.0 + (0.03 * playerData.get("dex").getAsInt()));
+        PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_MOVEMENT_SPEED, 0.10000000149011612 + (0.00003 * playerData.get("dex").getAsInt()));
+
+        int healthToAdd = 1;
+        p.sendMessage(ChatColor.GREEN + "민첩 스탯 " + healthToAdd + "을 추가하였습니다.");
+        plugin.getLogger().info(p.getName() + "님이 민첩 스텟을 올렸습니다.");
     }
 
-    private void addLuck() {
+    private void addLuck(Player p) {
 
     }
 }

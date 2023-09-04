@@ -15,6 +15,7 @@ public class InventoryStatsItems {
         assert strengthItemMeta != null;
         strengthItemMeta.setDisplayName(ChatColor.RED + (ChatColor.BOLD + "힘"));
         ArrayList<String> lore = new ArrayList<>();
+        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "체력:") + " " + (ChatColor.WHITE + "2"));
         lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "근접 공격력:") + " " + (ChatColor.WHITE + "1"));
         lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "방어력:") + " " + (ChatColor.WHITE + "0.25"));
         lore.add((ChatColor.LIGHT_PURPLE + "현재 스텟: ") + (ChatColor.YELLOW + String.valueOf(str)));
@@ -32,7 +33,7 @@ public class InventoryStatsItems {
         ArrayList<String> lore = new ArrayList<>();
         lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "체력:") + " " + (ChatColor.WHITE + "10"));
         lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "체력 흡수:") + " " + (ChatColor.WHITE + "0.1"));
-        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "넉백 저항:") + " " + (ChatColor.WHITE + "0.5"));
+        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "넉백 저항:") + " " + (ChatColor.WHITE + "0.25"));
         lore.add((ChatColor.LIGHT_PURPLE + "현재 스텟: ") + (ChatColor.YELLOW + String.valueOf(con)));
         healthItemMeta.setLore(lore);
         healthItem.setItemMeta(healthItemMeta);
@@ -47,8 +48,8 @@ public class InventoryStatsItems {
         dexItemMeta.setDisplayName(ChatColor.AQUA + (ChatColor.BOLD + "민첩"));
         ArrayList<String> lore = new ArrayList<>();
         lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "이동속도:") + " " + (ChatColor.WHITE + "0.05"));
-        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "근접 치명타 데미지:") + " " + (ChatColor.WHITE + "5"));
-        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "원거리 치명타 데미지:") + " " + (ChatColor.WHITE + "3"));
+        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "근접 치명타 데미지:") + " " + (ChatColor.WHITE + "4"));
+        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "원거리 치명타 데미지:") + " " + (ChatColor.WHITE + "7"));
         lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "공격속도:") + " " + (ChatColor.WHITE + "0.03"));
         lore.add((ChatColor.LIGHT_PURPLE + "현재 스텟: ") + (ChatColor.YELLOW + String.valueOf(dex)));
         dexItemMeta.setLore(lore);
