@@ -9,6 +9,12 @@ commands:
   statslist:
     description: 명령어 리스트입니다.
     usage: /statslist
+  stats reset:
+    description: 스텟 초기화입니다.
+    usage: /stats reset
   heal:
     description: 모든 디버프 해제 및 회복합니다.
     usage: /heal
+  status:
+    description: 사용자 프로필을 확인합니다.
+    usage: /status

@@ -2,6 +2,8 @@ package org.sunik.statsredirect.commands;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -29,7 +31,36 @@ public class MenuCommands implements CommandExecutor {
                 CommandService.infoMessage(p);
                 return true;
             }
+            if (label.equalsIgnoreCase("status")) {
+                CommandService.status(plugin, p);
+                return true;
+            }
             if (label.equalsIgnoreCase("stats")) {
+                if (args.length > 1 && p.isOp()) {
+                    if (args[0].equals("reset")) {
+                        if (args.length == 2) {
+                            Player targetPlayer = Bukkit.getPlayer(args[1]);
+                            assert targetPlayer != null;
+                            if (!targetPlayer.isOnline()) {
+                                p.sendMessage(ChatColor.RED + "해당 유저는 접속하고 있지 않습니다.");
+                                return true;
+                            }
+                            CommandService.reset(plugin, targetPlayer, p);
+                            return true;
+                        } else if (args.length == 3) {
+                            Player targetPlayer = Bukkit.getPlayer(args[1]);
+                            assert targetPlayer != null;
+                            CommandService.modifyStats(plugin, targetPlayer, p, args[2]);
+                        } else {
+                            plugin.getLogger().info(p.getName() + "님이 스텟 명령어 실패!");
+                            CommandService.infoMessage(p);
+                        }
+                    } else {
+                        plugin.getLogger().info(p.getName() + "님이 스텟 명령어 실패!");
+                        CommandService.infoMessage(p);
+                    }
+                    return true;
+                }
                 File playerFile = new File(plugin.getDataFolder() + "/userData", p.getName() + ".json");
                 JsonObject playerData = JsonParseUtils.loadPlayerData(playerFile, new Gson());
                 CommandService.openStatInventory(p, playerData); // 스탯 가상 인벤토리 열기

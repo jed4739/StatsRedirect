@@ -53,7 +53,6 @@ public class InventoryHandler implements Listener {
         boolean con = itemMeta.getDisplayName().equals(ChatColor.GREEN + (ChatColor.BOLD + "체력")) && clickedItem.getType() == Material.GREEN_STAINED_GLASS_PANE;
         boolean dex = itemMeta.getDisplayName().equals(ChatColor.AQUA + (ChatColor.BOLD + "민첩")) && clickedItem.getType() == Material.LIGHT_BLUE_STAINED_GLASS_PANE;
         boolean luck = itemMeta.getDisplayName().equals(ChatColor.GOLD + (ChatColor.BOLD + "행운")) && clickedItem.getType() == Material.YELLOW_STAINED_GLASS_PANE;
-        plugin.getLogger().info(str + "," + con + "," + dex + "," + luck);
 
         if (str) {
             event.setCurrentItem(null);
@@ -94,8 +93,7 @@ public class InventoryHandler implements Listener {
         PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_ATTACK_DAMAGE, 1.0 + (1.0 * playerData.get("str").getAsInt()));
         PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_ARMOR, 0.25 * playerData.get("str").getAsInt());
 
-        int healthToAdd = 1;
-        p.sendMessage(ChatColor.GREEN + "힘 스탯 " + healthToAdd + "을 추가하였습니다.");
+        p.sendMessage(ChatColor.GREEN + "힘 스탯 " + 1 + "을 추가하였습니다.");
         plugin.getLogger().info(p.getName() + "님이 힘 스텟을 올렸습니다.");
     }
 
@@ -115,8 +113,7 @@ public class InventoryHandler implements Listener {
 
         PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_KNOCKBACK_RESISTANCE, 0.25 * playerData.get("con").getAsInt());
 
-        int healthToAdd = 1;
-        p.sendMessage(ChatColor.GREEN + "체력 스탯 " + healthToAdd + "을 추가하였습니다.");
+        p.sendMessage(ChatColor.GREEN + "체력 스탯 " + 1 + "을 추가하였습니다.");
         plugin.getLogger().info(p.getName() + "님이 체력 스텟을 올렸습니다.");
     }
 
@@ -133,12 +130,21 @@ public class InventoryHandler implements Listener {
         PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_ATTACK_SPEED, 4.0 + (0.03 * playerData.get("dex").getAsInt()));
         PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_MOVEMENT_SPEED, 0.10000000149011612 + (0.00003 * playerData.get("dex").getAsInt()));
 
-        int healthToAdd = 1;
-        p.sendMessage(ChatColor.GREEN + "민첩 스탯 " + healthToAdd + "을 추가하였습니다.");
+        p.sendMessage(ChatColor.GREEN + "민첩 스탯 " + 1 + "을 추가하였습니다.");
         plugin.getLogger().info(p.getName() + "님이 민첩 스텟을 올렸습니다.");
     }
 
     private void addLuck(Player p) {
+        File playerFile = new File(plugin.getDataFolder() + "/userData", p.getName() + ".json");
+        if (!playerFile.exists()) {
+            return;
+        }
+        JsonObject playerData = JsonParseUtils.loadPlayerData(playerFile, gson);
+        int oldLuck = playerData.get("luck").getAsInt();
+        playerData.addProperty("luck", ++oldLuck);
+        JsonParseUtils.modifyPlayerData(playerFile, gson, playerData);
 
+        p.sendMessage(ChatColor.GREEN + "행운 스탯 " + 1 + "을 추가하였습니다.");
+        plugin.getLogger().info(p.getName() + "님이 행운 스텟을 올렸습니다.");
     }
 }
