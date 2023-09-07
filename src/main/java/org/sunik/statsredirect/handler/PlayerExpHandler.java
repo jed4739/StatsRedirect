@@ -28,7 +28,6 @@ public class PlayerExpHandler implements Listener {
         float xp = player.getExp();
         savePlayerExp(player, level, xp);
     }
-
     @EventHandler
     public void onPlayerLevelChange(PlayerLevelChangeEvent event) {
         Player player = event.getPlayer();
@@ -36,7 +35,6 @@ public class PlayerExpHandler implements Listener {
         float xp = player.getExp();
         savePlayerExp(player, level, xp);
     }
-
     /*
      * 유저 데이터를 읽어와서 level과 xp 프로퍼티만 수정 후 저장.
      */

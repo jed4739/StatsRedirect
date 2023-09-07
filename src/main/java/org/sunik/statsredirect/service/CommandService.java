@@ -16,7 +16,7 @@ public class CommandService {
     // 스탯 가상 인벤토리 열기
     public static void openStatInventory(Player player, JsonObject playerData) {
         // 슬롯 사이즈
-        int size = 27;
+        int size = 45;
         Inventory inventory = Bukkit.createInventory(player, size, "스탯");
         InventoryStatsItems items = new InventoryStatsItems();
         // 가상 인벤토리 구성
@@ -24,19 +24,23 @@ public class CommandService {
             switch (i) {
                 case 10:
                     // 2번째줄 2번째 칸에 체력 아이템 추가
-                    inventory.setItem(i, items.createStrengthItem(playerData.get("str").getAsInt()));
-                    break;
-                case 12:
-                    // 2번째줄 4번째 칸에 체력 아이템 추가
                     inventory.setItem(i, items.createConItem(playerData.get("con").getAsInt()));
                     break;
-                case 14:
-                    // 2번째줄 6번째 칸에 체력 아이템 추가
-                    inventory.setItem(i, items.createDexItem(playerData.get("dex").getAsInt()));
+                case 13:
+                    // 2번째줄 5번째 칸에 힘 아이템 추가
+                    inventory.setItem(i, items.createStrengthItem(playerData.get("str").getAsInt()));
                     break;
                 case 16:
-                    // 2번째줄 8번째 칸에 체력 아이템 추가
+                    // 2번째줄 8번째 칸에 민첩 아이템 추가
+                    inventory.setItem(i, items.createDexItem(playerData.get("dex").getAsInt()));
+                    break;
+                case 29:
+                    // 4번째줄 3번째 칸에 운 아이템 추가
                     inventory.setItem(i, items.createLuckItem(playerData.get("luck").getAsInt()));
+                    break;
+                case 33:
+                    // 4번째줄 7번째 칸에 지혜 아이템 추가
+                    inventory.setItem(i, items.createWisItem(playerData.get("wis").getAsInt()));
                     break;
                 default:
                     inventory.setItem(i, items.createEmptyGlassItem());
@@ -78,8 +82,6 @@ public class CommandService {
         p.sendMessage(ChatColor.AQUA + (ChatColor.BOLD + "민첩") + ChatColor.YELLOW + ": " + ChatColor.WHITE + playerData.get("dex").getAsInt());
         p.sendMessage(ChatColor.GOLD + (ChatColor.BOLD + "행운") + ChatColor.YELLOW + ": " + ChatColor.WHITE + playerData.get("luck").getAsInt());
 
-        p.sendMessage(ChatColor.GOLD + "/stats");
-        p.sendMessage(ChatColor.GOLD + "/statslist");
     }
 
     public static void reset(JavaPlugin plugin, Player targetP, Player p) {

@@ -61,14 +61,13 @@ public class PlayerDamageHandler implements Listener {
                 Player shooter = (Player) arrow.getShooter();
                 File playerFile = new File(plugin.getDataFolder() + "/userData", shooter.getName() + ".json");
                 JsonObject playerData = JsonParseUtils.loadPlayerData(playerFile, new Gson());
-                double criticalDamage = 7 * playerData.get("dex").getAsInt();
                 // 확률 계산이 0~1 이기에 0.001 = 0.1% 이다.
-                double criticalPercentage = 0.0008 * playerData.get("luck").getAsInt();
+                double criticalPercentage = 0.002 * playerData.get("luck").getAsInt();
                 // 크리티컬 데미지를 적용할지 여부를 확인합니다.
-                shooter.sendMessage("화살로 쏨");
                 if (shouldDealCriticalDamage(criticalPercentage)) {
                     // 이벤트로부터 기본 데미지 값을 가져옵니다.
                     double baseDamage = event.getDamage();
+                    double criticalDamage = (baseDamage * 0.05) * (playerData.get("dex").getAsInt() + playerData.get("dex").getAsInt());
                     // 크리티컬 데미지를 계산합니다.
                     double resultCriticalDamage = baseDamage + criticalDamage;
                     // 메시지
@@ -85,13 +84,13 @@ public class PlayerDamageHandler implements Listener {
 
             File playerFile = new File(plugin.getDataFolder() + "/userData", attacker.getName() + ".json");
             JsonObject playerData = JsonParseUtils.loadPlayerData(playerFile, new Gson());
-            double criticalDamage = 4 * playerData.get("dex").getAsInt();
             // 확률 계산이 0~1 이기에 0.001 = 0.1% 이다.
-            double criticalPercentage = 0.001 * playerData.get("luck").getAsInt();
+            double criticalPercentage = 0.003 * playerData.get("luck").getAsInt();
             // 크리티컬 데미지를 적용할지 여부를 확인합니다.
             if (shouldDealCriticalDamage(criticalPercentage)) {
                 // 이벤트로부터 기본 데미지 값을 가져옵니다.
                 double baseDamage = event.getDamage();
+                double criticalDamage = (baseDamage * 0.03) * playerData.get("dex").getAsInt();
                 // 크리티컬 데미지를 계산합니다.
                 double resultCriticalDamage = baseDamage + criticalDamage;
                 // 메시지
