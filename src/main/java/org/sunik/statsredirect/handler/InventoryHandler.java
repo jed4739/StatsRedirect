@@ -49,6 +49,15 @@ public class InventoryHandler implements Listener {
             return; // 아이템 메타 데이터가 없는 경우 무시
         }
 
+        File playerFile = new File(plugin.getDataFolder() + "/userData", player.getName() + ".json");
+        if (!playerFile.exists()) {
+            return;
+        }
+        JsonObject playerData = JsonParseUtils.loadPlayerData(playerFile, gson);
+        if (playerData.get("point").getAsInt() == 0) {
+            return;
+        }
+
         boolean str = itemMeta.getDisplayName().equals(ChatColor.RED + (ChatColor.BOLD + "힘")) && clickedItem.getType() == Material.RED_STAINED_GLASS_PANE;
         boolean con = itemMeta.getDisplayName().equals(ChatColor.GREEN + (ChatColor.BOLD + "체력")) && clickedItem.getType() == Material.GREEN_STAINED_GLASS_PANE;
         boolean dex = itemMeta.getDisplayName().equals(ChatColor.AQUA + (ChatColor.BOLD + "민첩")) && clickedItem.getType() == Material.LIGHT_BLUE_STAINED_GLASS_PANE;
@@ -92,7 +101,9 @@ public class InventoryHandler implements Listener {
         }
         JsonObject playerData = JsonParseUtils.loadPlayerData(playerFile, gson);
         int oldStr = playerData.get("str").getAsInt();
+        int oldPoint = playerData.get("point").getAsInt();
         playerData.addProperty("str", ++oldStr);
+        playerData.addProperty("point", --oldPoint);
         JsonParseUtils.modifyPlayerData(playerFile, gson, playerData);
 
         PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_ATTACK_DAMAGE, 1.0 + (1.0 * playerData.get("str").getAsInt()) + (0.5 * playerData.get("wis").getAsInt()));
@@ -113,7 +124,9 @@ public class InventoryHandler implements Listener {
         }
         JsonObject playerData = JsonParseUtils.loadPlayerData(playerFile, gson);
         int oldCon = playerData.get("con").getAsInt();
+        int oldPoint = playerData.get("point").getAsInt();
         playerData.addProperty("con", ++oldCon);
+        playerData.addProperty("point", --oldPoint);
         JsonParseUtils.modifyPlayerData(playerFile, gson, playerData);
 
         int strength = playerData.get("str").getAsInt();
@@ -136,7 +149,9 @@ public class InventoryHandler implements Listener {
         }
         JsonObject playerData = JsonParseUtils.loadPlayerData(playerFile, gson);
         int oldDex = playerData.get("dex").getAsInt();
+        int oldPoint = playerData.get("point").getAsInt();
         playerData.addProperty("dex", ++oldDex);
+        playerData.addProperty("point", --oldPoint);
         JsonParseUtils.modifyPlayerData(playerFile, gson, playerData);
 
         int strength = playerData.get("str").getAsInt();
@@ -159,7 +174,9 @@ public class InventoryHandler implements Listener {
         }
         JsonObject playerData = JsonParseUtils.loadPlayerData(playerFile, gson);
         int oldLuck = playerData.get("luck").getAsInt();
+        int oldPoint = playerData.get("point").getAsInt();
         playerData.addProperty("luck", ++oldLuck);
+        playerData.addProperty("point", --oldPoint);
         JsonParseUtils.modifyPlayerData(playerFile, gson, playerData);
 
         int strength = playerData.get("str").getAsInt();
@@ -184,7 +201,9 @@ public class InventoryHandler implements Listener {
         }
         JsonObject playerData = JsonParseUtils.loadPlayerData(playerFile, gson);
         int oldWis = playerData.get("wis").getAsInt();
+        int oldPoint = playerData.get("point").getAsInt();
         playerData.addProperty("wis", ++oldWis);
+        playerData.addProperty("point", --oldPoint);
         JsonParseUtils.modifyPlayerData(playerFile, gson, playerData);
 
         int strength = playerData.get("str").getAsInt();

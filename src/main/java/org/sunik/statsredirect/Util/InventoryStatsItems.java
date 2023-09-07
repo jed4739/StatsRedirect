@@ -49,9 +49,9 @@ public class InventoryStatsItems {
         assert dexItemMeta != null;
         dexItemMeta.setDisplayName(ChatColor.AQUA + (ChatColor.BOLD + "민첩"));
         ArrayList<String> lore = new ArrayList<>();
-        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "이동속도:") + " " + (ChatColor.WHITE + "0.1"));
-        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "근접 치명타 데미지:") + " " + (ChatColor.WHITE + "3"));
-        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "원거리 치명타 데미지:") + " " + (ChatColor.WHITE + "5"));
+        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "이동속도:") + " " + (ChatColor.WHITE + "0.1%"));
+        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "근접 치명타 데미지:") + " " + (ChatColor.WHITE + "3%"));
+        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "원거리 치명타 데미지:") + " " + (ChatColor.WHITE + "5%"));
         lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "공격속도:") + " " + (ChatColor.WHITE + "0.1"));
         lore.add((ChatColor.LIGHT_PURPLE + "현재 스텟: ") + (ChatColor.YELLOW + String.valueOf(dex)));
         dexItemMeta.setLore(lore);
@@ -66,8 +66,8 @@ public class InventoryStatsItems {
         assert luckItemMeta != null;
         luckItemMeta.setDisplayName(ChatColor.GOLD + (ChatColor.BOLD + "행운"));
         ArrayList<String> lore = new ArrayList<>();
-        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "근접 크리티컬 확률:") + " " + (ChatColor.WHITE + "0.3"));
-        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "원거리 크리티컬 확률:") + " " + (ChatColor.WHITE + "0.2"));
+        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "근접 치명타 확률:") + " " + (ChatColor.WHITE + "0.3%"));
+        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "원거리 치명타 확률:") + " " + (ChatColor.WHITE + "0.2%"));
         lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "공격속도:") + " " + (ChatColor.WHITE + "0.5"));
         lore.add((ChatColor.LIGHT_PURPLE + "현재 스텟: ") + (ChatColor.YELLOW + String.valueOf(luck)));
         luckItemMeta.setLore(lore);
@@ -83,6 +83,7 @@ public class InventoryStatsItems {
         wisItemMeta.setDisplayName(ChatColor.DARK_PURPLE + (ChatColor.BOLD + "지혜"));
         ArrayList<String> lore = new ArrayList<>();
         lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "공격력:") + " " + (ChatColor.WHITE + "0.5"));
+        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "원거리 치명타 데미지:") + " " + (ChatColor.WHITE + "2%"));
         lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "체력:") + " " + (ChatColor.WHITE + "4"));
         lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "방어력:") + " " + (ChatColor.WHITE + "0.1"));
         lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "치유량:") + " " + (ChatColor.WHITE + "1"));

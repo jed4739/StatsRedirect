@@ -45,11 +45,13 @@ public class PlayerExpHandler implements Listener {
             // 데이터 값이 더 낮아지지 않도록 수정
             int oldLevel = playerData.get("level").getAsInt();
             float oldXp = playerData.get("xp").getAsFloat();
+            float oldPoint = playerData.get("point").getAsFloat();
             if (level < oldLevel) {
                 return;
             } else if (level == oldLevel && xp < oldXp) {
                 return;
             }
+            playerData.addProperty("point", ++oldPoint);
             playerData.addProperty("level", level);
             playerData.addProperty("xp", xp);
             JsonParseUtils.modifyPlayerData(playerFile, gson, playerData);
