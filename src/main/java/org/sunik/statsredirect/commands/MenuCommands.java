@@ -63,7 +63,7 @@ public class MenuCommands implements CommandExecutor {
                 }
                 File playerFile = new File(plugin.getDataFolder() + "/userData", p.getName() + ".json");
                 JsonObject playerData = JsonParseUtils.loadPlayerData(playerFile, new Gson());
-                CommandService.openStatInventory(p, playerData); // 스탯 가상 인벤토리 열기
+                CommandService.openStatInventory(p, playerData, plugin); // 스탯 가상 인벤토리 열기
                 return true;
             }
             if (label.equalsIgnoreCase("heal") && p.isOp()) {

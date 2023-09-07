@@ -1,10 +1,15 @@
 package org.sunik.statsredirect.Util;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class InventoryStatsItems {
@@ -91,6 +96,22 @@ public class InventoryStatsItems {
         wisItemMeta.setLore(lore);
         wisItem.setItemMeta(wisItemMeta);
         return wisItem;
+    }
+
+    public ItemStack createStatsInfo(JavaPlugin plugin, Player player) {
+        ItemStack emeraldItem = new ItemStack(Material.EMERALD);
+        ItemMeta emeraldItemMeta = emeraldItem.getItemMeta();
+        assert emeraldItemMeta != null;
+
+        File playerFile = new File(plugin.getDataFolder() + "/userData", player.getName() + ".json");
+        JsonObject playerData = JsonParseUtils.loadPlayerData(playerFile, new Gson());
+
+        emeraldItemMeta.setDisplayName(ChatColor.DARK_PURPLE + (ChatColor.BOLD + "포인트"));
+        ArrayList<String> lore = new ArrayList<>();
+        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "남은 포인트:") + " " + (ChatColor.WHITE + String.valueOf(playerData.get("point").getAsInt())));
+        emeraldItemMeta.setLore(lore);
+        emeraldItem.setItemMeta(emeraldItemMeta);
+        return emeraldItem;
     }
 
     public ItemStack createEmptyGlassItem() {

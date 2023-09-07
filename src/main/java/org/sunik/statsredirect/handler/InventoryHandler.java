@@ -55,6 +55,8 @@ public class InventoryHandler implements Listener {
         }
         JsonObject playerData = JsonParseUtils.loadPlayerData(playerFile, gson);
         if (playerData.get("point").getAsInt() == 0) {
+            event.setCurrentItem(null);
+            player.performCommand("stats");
             return;
         }
 
@@ -63,6 +65,7 @@ public class InventoryHandler implements Listener {
         boolean dex = itemMeta.getDisplayName().equals(ChatColor.AQUA + (ChatColor.BOLD + "민첩")) && clickedItem.getType() == Material.LIGHT_BLUE_STAINED_GLASS_PANE;
         boolean luck = itemMeta.getDisplayName().equals(ChatColor.GOLD + (ChatColor.BOLD + "행운")) && clickedItem.getType() == Material.YELLOW_STAINED_GLASS_PANE;
         boolean wis = itemMeta.getDisplayName().equals(ChatColor.DARK_PURPLE + (ChatColor.BOLD + "지혜")) && clickedItem.getType() == Material.PURPLE_STAINED_GLASS_PANE;
+        boolean point = itemMeta.getDisplayName().equals(ChatColor.DARK_PURPLE + (ChatColor.BOLD + "포인트")) && clickedItem.getType() == Material.EMERALD;
 
         if (str) {
             event.setCurrentItem(null);
@@ -83,6 +86,9 @@ public class InventoryHandler implements Listener {
         } else if (wis) {
             event.setCurrentItem(null);
             addWis(player);
+            player.performCommand("stats");
+        } else if (point) {
+            event.setCurrentItem(null);
             player.performCommand("stats");
         } else if (itemMeta.getDisplayName().equalsIgnoreCase(" ") && clickedItem.getType() == Material.WHITE_STAINED_GLASS_PANE) {
             event.setCurrentItem(null);

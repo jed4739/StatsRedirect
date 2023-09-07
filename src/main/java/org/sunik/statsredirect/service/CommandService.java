@@ -14,7 +14,7 @@ import java.io.File;
 
 public class CommandService {
     // 스탯 가상 인벤토리 열기
-    public static void openStatInventory(Player player, JsonObject playerData) {
+    public static void openStatInventory(Player player, JsonObject playerData, JavaPlugin plugin) {
         // 슬롯 사이즈
         int size = 45;
         Inventory inventory = Bukkit.createInventory(player, size, "스탯");
@@ -41,6 +41,10 @@ public class CommandService {
                 case 33:
                     // 4번째줄 7번째 칸에 지혜 아이템 추가
                     inventory.setItem(i, items.createWisItem(playerData.get("wis").getAsInt()));
+                    break;
+                case 36:
+                    // 5번째줄 1번째 칸에 지혜 아이템 추가
+                    inventory.setItem(i, items.createStatsInfo(plugin, player));
                     break;
                 default:
                     inventory.setItem(i, items.createEmptyGlassItem());

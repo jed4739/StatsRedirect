@@ -51,7 +51,8 @@ public class PlayerExpHandler implements Listener {
             } else if (level == oldLevel && xp < oldXp) {
                 return;
             }
-            playerData.addProperty("point", ++oldPoint);
+            float mathPoint = oldPoint + ((level - oldLevel) * 4);
+            playerData.addProperty("point", mathPoint);
             playerData.addProperty("level", level);
             playerData.addProperty("xp", xp);
             JsonParseUtils.modifyPlayerData(playerFile, gson, playerData);
