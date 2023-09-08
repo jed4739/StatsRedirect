@@ -32,9 +32,9 @@ public class PlayerUtils {
 
     public static void playerAttributeChange(Player player, int strength, int constitution, int dexterity, int luck, int wis) {
         modifyPlayerAttribute(player, Attribute.GENERIC_KNOCKBACK_RESISTANCE, 0.01 * constitution);
-        modifyPlayerAttribute(player, Attribute.GENERIC_ATTACK_DAMAGE, 1.0 + (1.0 * strength) + (0.5 * wis));
+        modifyPlayerAttribute(player, Attribute.GENERIC_ATTACK_DAMAGE, 1.0 + (0.5 * strength) + (0.1 * wis));
         modifyPlayerAttribute(player, Attribute.GENERIC_ARMOR, (0.25 * strength) + (0.1 * wis));
         modifyPlayerAttribute(player, Attribute.GENERIC_ATTACK_SPEED, 4.0 + (0.1 * dexterity) + (0.07 * strength) + (0.05 * constitution) + (0.5 * luck));
-        modifyPlayerAttribute(player, Attribute.GENERIC_MOVEMENT_SPEED, 0.10000000149011612 + (0.0001 * dexterity));
+        modifyPlayerAttribute(player, Attribute.GENERIC_MOVEMENT_SPEED, 0.10000000149011612 + (0.0003 * dexterity));
     }
 }

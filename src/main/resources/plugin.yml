@@ -18,3 +18,6 @@ commands:
   status:
     description: 사용자 프로필을 확인합니다.
     usage: /status
+  level:
+    description: 레벨을 수정 및 리셋합니다.
+    usage: /level

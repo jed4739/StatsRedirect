@@ -49,23 +49,27 @@ public class InventoryHandler implements Listener {
             return; // 아이템 메타 데이터가 없는 경우 무시
         }
 
-        File playerFile = new File(plugin.getDataFolder() + "/userData", player.getName() + ".json");
-        if (!playerFile.exists()) {
-            return;
-        }
-        JsonObject playerData = JsonParseUtils.loadPlayerData(playerFile, gson);
-        if (playerData.get("point").getAsInt() == 0) {
-            event.setCurrentItem(null);
-            player.performCommand("stats");
-            return;
-        }
-
         boolean str = itemMeta.getDisplayName().equals(ChatColor.RED + (ChatColor.BOLD + "힘")) && clickedItem.getType() == Material.RED_STAINED_GLASS_PANE;
         boolean con = itemMeta.getDisplayName().equals(ChatColor.GREEN + (ChatColor.BOLD + "체력")) && clickedItem.getType() == Material.GREEN_STAINED_GLASS_PANE;
         boolean dex = itemMeta.getDisplayName().equals(ChatColor.AQUA + (ChatColor.BOLD + "민첩")) && clickedItem.getType() == Material.LIGHT_BLUE_STAINED_GLASS_PANE;
         boolean luck = itemMeta.getDisplayName().equals(ChatColor.GOLD + (ChatColor.BOLD + "행운")) && clickedItem.getType() == Material.YELLOW_STAINED_GLASS_PANE;
         boolean wis = itemMeta.getDisplayName().equals(ChatColor.DARK_PURPLE + (ChatColor.BOLD + "지혜")) && clickedItem.getType() == Material.PURPLE_STAINED_GLASS_PANE;
         boolean point = itemMeta.getDisplayName().equals(ChatColor.DARK_PURPLE + (ChatColor.BOLD + "포인트")) && clickedItem.getType() == Material.EMERALD;
+
+        File playerFile = new File(plugin.getDataFolder() + "/userData", player.getName() + ".json");
+        if (!playerFile.exists()) {return;}
+        JsonObject playerData = JsonParseUtils.loadPlayerData(playerFile, gson);
+        int playerPoints = playerData.get("point").getAsInt();
+        if (playerPoints == 0 && str ||
+            playerPoints == 0 && con ||
+            playerPoints == 0 && dex ||
+            playerPoints == 0 && luck ||
+            playerPoints == 0 && wis ||
+            playerPoints == 0 && point) {
+            event.setCurrentItem(null);
+            player.performCommand("stats");
+            return;
+        }
 
         if (str) {
             event.setCurrentItem(null);
@@ -112,7 +116,7 @@ public class InventoryHandler implements Listener {
         playerData.addProperty("point", --oldPoint);
         JsonParseUtils.modifyPlayerData(playerFile, gson, playerData);
 
-        PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_ATTACK_DAMAGE, 1.0 + (1.0 * playerData.get("str").getAsInt()) + (0.5 * playerData.get("wis").getAsInt()));
+        PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_ATTACK_DAMAGE, 1.0 + (0.5 * playerData.get("str").getAsInt()) + (0.1 * playerData.get("wis").getAsInt()));
         PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_ARMOR, (0.25 * playerData.get("str").getAsInt()) + (0.1 * playerData.get("wis").getAsInt()));
 
         p.sendMessage(ChatColor.GREEN + "힘 스탯 " + 1 + "을 추가하였습니다.");
@@ -167,7 +171,7 @@ public class InventoryHandler implements Listener {
         int wis = playerData.get("wis").getAsInt();
 
         PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_ATTACK_SPEED, 4.0 + (0.1 * dexterity) + (0.07 * strength) + (0.05 * constitution) + (0.5 * luck));
-        PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_MOVEMENT_SPEED, 0.10000000149011612 + (0.00003 * playerData.get("dex").getAsInt()));
+        PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_MOVEMENT_SPEED, 0.10000000149011612 + (0.0003 * playerData.get("dex").getAsInt()));
 
         p.sendMessage(ChatColor.GREEN + "민첩 스탯 " + 1 + "을 추가하였습니다.");
         plugin.getLogger().info(p.getName() + "님이 민첩 스텟을 올렸습니다.");
@@ -218,7 +222,7 @@ public class InventoryHandler implements Listener {
         int luck = playerData.get("luck").getAsInt();
         int wis = playerData.get("wis").getAsInt();
 
-        PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_ATTACK_DAMAGE, 1.0 + (1.0 * strength) + (0.5 * wis));
+        PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_ATTACK_DAMAGE, 1.0 + (0.5 * strength) + (0.1 * wis));
         PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_ARMOR, (0.25 * strength) + (0.1 * wis));
 
         p.sendMessage(ChatColor.GREEN + "행운 지혜 " + 1 + "을 추가하였습니다.");

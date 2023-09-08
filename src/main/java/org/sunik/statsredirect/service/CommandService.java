@@ -66,6 +66,8 @@ public class CommandService {
             String admin = ChatColor.WHITE + "[" + ChatColor.RED + "관리자 용도" + ChatColor.WHITE + "]";
             p.sendMessage(admin + ChatColor.YELLOW + "/heal");
             p.sendMessage(admin + ChatColor.YELLOW + "/stats reset [PlayerName] [str,con,dex,luck](없으면 all)");
+            p.sendMessage(admin + ChatColor.YELLOW + "/level modify [PlayerName] [Number]");
+            p.sendMessage(admin + ChatColor.YELLOW + "/level reset [PlayerName]");
         }
 
         // Default Command List
@@ -85,6 +87,7 @@ public class CommandService {
         p.sendMessage(ChatColor.GREEN + (ChatColor.BOLD + "체력") + ChatColor.YELLOW + ": " + ChatColor.WHITE + playerData.get("con").getAsInt());
         p.sendMessage(ChatColor.AQUA + (ChatColor.BOLD + "민첩") + ChatColor.YELLOW + ": " + ChatColor.WHITE + playerData.get("dex").getAsInt());
         p.sendMessage(ChatColor.GOLD + (ChatColor.BOLD + "행운") + ChatColor.YELLOW + ": " + ChatColor.WHITE + playerData.get("luck").getAsInt());
+        p.sendMessage(ChatColor.DARK_PURPLE + (ChatColor.BOLD + "지혜") + ChatColor.YELLOW + ": " + ChatColor.WHITE + playerData.get("luck").getAsInt());
 
     }
 
@@ -95,11 +98,12 @@ public class CommandService {
         playerData.addProperty("con", 0);
         playerData.addProperty("dex", 0);
         playerData.addProperty("luck", 0);
+        playerData.addProperty("wis", 0);
         p.sendMessage((ChatColor.BOLD + targetP.getName()) + "의 스텟 초기화 완료");
         JsonParseUtils.modifyPlayerData(playerFile, new Gson(), playerData);
     }
 
-    public static void modifyStats(JavaPlugin plugin, Player targetP, Player p, String args) {
+    public static void modifyStatsReset(JavaPlugin plugin, Player targetP, Player p, String args) {
         File playerFile = new File(plugin.getDataFolder() + "/userData", targetP.getName() + ".json");
         JsonObject playerData = JsonParseUtils.loadPlayerData(playerFile, new Gson());
         switch (args) {
@@ -114,6 +118,9 @@ public class CommandService {
                 break;
             case "luck":
                 playerData.addProperty("luck", 0);
+                break;
+            case "wis":
+                playerData.addProperty("wis", 0);
                 break;
             default: CommandService.infoMessage(targetP); return;
         }

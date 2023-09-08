@@ -35,6 +35,37 @@ public class MenuCommands implements CommandExecutor {
                 CommandService.status(plugin, p);
                 return true;
             }
+            if (label.equalsIgnoreCase("level")) {
+                if (args.length > 1 && p.isOp()) {
+                    Player targetPlayer = Bukkit.getPlayer(args[1]);
+                    assert targetPlayer != null;
+                    if (!targetPlayer.isOnline()) {
+                        p.sendMessage(ChatColor.RED + "해당 유저는 접속하고 있지 않습니다.");
+                        return true;
+                    }
+                    if (args.length < 4 && args[0].equals("modify")) {
+                        File playerFile = new File(plugin.getDataFolder() + "/userData", targetPlayer.getName() + ".json");
+                        JsonObject playerData = JsonParseUtils.loadPlayerData(playerFile, new Gson());
+                        playerData.addProperty("level", Integer.parseInt(args[2]));
+                        p.sendMessage((ChatColor.BOLD + targetPlayer.getName()) + "의 레벨 수정 완료");
+                        JsonParseUtils.modifyPlayerData(playerFile, new Gson(), playerData);
+
+                    } else if (args.length < 3 && args[0].equals("reset")) {
+                        File playerFile = new File(plugin.getDataFolder() + "/userData", targetPlayer.getName() + ".json");
+                        JsonObject playerData = JsonParseUtils.loadPlayerData(playerFile, new Gson());
+                        playerData.addProperty("level", 0);
+                        p.sendMessage((ChatColor.BOLD + targetPlayer.getName()) + "의 레벨 초기화 완료");
+                        JsonParseUtils.modifyPlayerData(playerFile, new Gson(), playerData);
+                    } else {
+                        CommandService.infoMessage(p);
+                    }
+                    return true;
+                } else {
+                    plugin.getLogger().info(p.getName() + "님이 레벨 명령어 실패!");
+                    CommandService.infoMessage(p);
+                }
+                return true;
+            }
             if (label.equalsIgnoreCase("stats")) {
                 if (args.length > 1 && p.isOp()) {
                     if (args[0].equals("reset")) {
@@ -50,7 +81,7 @@ public class MenuCommands implements CommandExecutor {
                         } else if (args.length == 3) {
                             Player targetPlayer = Bukkit.getPlayer(args[1]);
                             assert targetPlayer != null;
-                            CommandService.modifyStats(plugin, targetPlayer, p, args[2]);
+                            CommandService.modifyStatsReset(plugin, targetPlayer, p, args[2]);
                         } else {
                             plugin.getLogger().info(p.getName() + "님이 스텟 명령어 실패!");
                             CommandService.infoMessage(p);

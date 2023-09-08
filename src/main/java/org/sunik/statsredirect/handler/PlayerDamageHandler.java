@@ -67,7 +67,7 @@ public class PlayerDamageHandler implements Listener {
                 if (shouldDealCriticalDamage(criticalPercentage)) {
                     // 이벤트로부터 기본 데미지 값을 가져옵니다.
                     double baseDamage = event.getDamage();
-                    double criticalDamage = (baseDamage * 0.05) * (playerData.get("dex").getAsInt() + playerData.get("wis").getAsInt());
+                    double criticalDamage = ((baseDamage * 0.07) * (playerData.get("dex").getAsInt()) + ((baseDamage * 0.5) * playerData.get("wis").getAsInt()));
                     // 크리티컬 데미지를 계산합니다.
                     double resultCriticalDamage = baseDamage + criticalDamage;
                     // 메시지
