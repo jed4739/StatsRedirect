@@ -46,7 +46,7 @@ public class PlayerDeathHandler implements Listener {
             int point = playerData.get("point").getAsInt();
 
             // HP (str, con, wis)
-            double resultHp = 100.0 + (10.0 * constitution) + (2.0 * strength) + (1.0 * wis);
+            double resultHp = 100.0 + (5.0 * constitution) + (2.0 * strength) + (1.0 * wis);
             HealthUtils.setMaxHealth(player, resultHp);
 
             // effects

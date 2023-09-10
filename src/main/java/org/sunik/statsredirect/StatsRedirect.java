@@ -50,6 +50,8 @@ public final class StatsRedirect extends JavaPlugin {
         getCommand("stats").setExecutor(new MenuCommands(this));
         getCommand("statslist").setExecutor(new MenuCommands(this));
         getCommand("heal").setExecutor(new MenuCommands(this));
+        getCommand("level").setExecutor(new MenuCommands(this));
+        getCommand("status").setExecutor(new MenuCommands(this));
 
         // Listener 등록
         getServer().getPluginManager().registerEvents(new InventoryHandler(this, new Gson()), this);
