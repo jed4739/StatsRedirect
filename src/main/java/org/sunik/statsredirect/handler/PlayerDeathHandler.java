@@ -2,10 +2,8 @@ package org.sunik.statsredirect.handler;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -46,7 +44,7 @@ public class PlayerDeathHandler implements Listener {
             int point = playerData.get("point").getAsInt();
 
             // HP (str, con, wis)
-            double resultHp = 100.0 + (5.0 * constitution) + (2.0 * strength) + (1.0 * wis);
+            double resultHp = 100.0 + (5.0 * constitution) + (2.0 * strength) + (1.0 * wis) + (1.0 * dexterity);
             HealthUtils.setMaxHealth(player, resultHp);
 
             // effects

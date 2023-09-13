@@ -58,6 +58,7 @@ public class InventoryStatsItems {
         lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "근접 치명타 데미지:") + " " + (ChatColor.WHITE + "5%"));
         lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "원거리 치명타 데미지:") + " " + (ChatColor.WHITE + "15%"));
         lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "공격속도:") + " " + (ChatColor.WHITE + "0.1"));
+        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "체력:") + " " + (ChatColor.WHITE + "1"));
         lore.add((ChatColor.LIGHT_PURPLE + "현재 스텟: ") + (ChatColor.YELLOW + String.valueOf(dex)));
         dexItemMeta.setLore(lore);
         dexItem.setItemMeta(dexItemMeta);
@@ -71,10 +72,10 @@ public class InventoryStatsItems {
         assert luckItemMeta != null;
         luckItemMeta.setDisplayName(ChatColor.GOLD + (ChatColor.BOLD + "행운"));
         ArrayList<String> lore = new ArrayList<>();
-        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "근접 치명타 확률:") + " " + (ChatColor.WHITE + "0.7%"));
-        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "원거리 치명타 확률:") + " " + (ChatColor.WHITE + "0.5%"));
-        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "경험치 획득량:") + " " + (ChatColor.WHITE + "0.1%"));
+        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "근접 치명타 확률:") + " " + (ChatColor.WHITE + "0.3%"));
+        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "원거리 치명타 확률:") + " " + (ChatColor.WHITE + "1%"));
         lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "공격속도:") + " " + (ChatColor.WHITE + "0.5"));
+        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "방어력:") + " " + (ChatColor.WHITE + "0.5"));
         lore.add((ChatColor.LIGHT_PURPLE + "현재 스텟: ") + (ChatColor.YELLOW + String.valueOf(luck)));
         luckItemMeta.setLore(lore);
         luckItem.setItemMeta(luckItemMeta);

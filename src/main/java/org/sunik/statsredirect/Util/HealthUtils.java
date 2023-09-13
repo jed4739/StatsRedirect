@@ -1,6 +1,5 @@
 package org.sunik.statsredirect.Util;
 
-import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 

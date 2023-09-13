@@ -46,12 +46,10 @@ public class PlayerExpHandler implements Listener {
             int oldLevel = playerData.get("level").getAsInt();
             float oldXp = playerData.get("xp").getAsFloat();
             float oldPoint = playerData.get("point").getAsFloat();
-            if (level < oldLevel) {
-                return;
-            } else if (level == oldLevel && xp < oldXp) {
+            if (level < oldLevel || level == oldLevel && xp < oldXp) {
                 return;
             }
-            float mathPoint = oldPoint + ((level - oldLevel) * 4);
+            float mathPoint = oldPoint + ((level - oldLevel) * 2);
             playerData.addProperty("point", mathPoint);
             playerData.addProperty("level", level);
             playerData.addProperty("xp", xp);

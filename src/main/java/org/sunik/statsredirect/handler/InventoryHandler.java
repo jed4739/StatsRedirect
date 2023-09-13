@@ -117,7 +117,7 @@ public class InventoryHandler implements Listener {
         JsonParseUtils.modifyPlayerData(playerFile, gson, playerData);
 
         PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_ATTACK_DAMAGE, 1.0 + (0.5 * playerData.get("str").getAsInt()) + (0.1 * playerData.get("wis").getAsInt()));
-        PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_ARMOR, (0.25 * playerData.get("str").getAsInt()) + (0.1 * playerData.get("wis").getAsInt()));
+        PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_ARMOR, (0.1 * playerData.get("str").getAsInt()) + (0.01 * playerData.get("wis").getAsInt())  + (0.5 * playerData.get("luck").getAsInt()));
 
         p.sendMessage(ChatColor.GREEN + "힘 스탯 " + 1 + "을 추가하였습니다.");
         plugin.getLogger().info(p.getName() + "님이 힘 스텟을 올렸습니다.");
@@ -125,7 +125,7 @@ public class InventoryHandler implements Listener {
 
     private void addCon(Player p) {
         // 추가할 체력
-        double addedMaxHealth = 10.0;
+        double addedMaxHealth = 5.0;
         HealthUtils.addMaxHealth(p, addedMaxHealth);
 
         File playerFile = new File(plugin.getDataFolder() + "/userData", p.getName() + ".json");
@@ -145,7 +145,7 @@ public class InventoryHandler implements Listener {
         int luck = playerData.get("luck").getAsInt();
         int wis = playerData.get("wis").getAsInt();
 
-        PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_KNOCKBACK_RESISTANCE, 0.25 * constitution);
+        PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_KNOCKBACK_RESISTANCE, 0.0001 * constitution);
         PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_ATTACK_SPEED, 4.0 + (0.1 * dexterity) + (0.07 * strength) + (0.05 * constitution) + (0.5 * luck));
 
         p.sendMessage(ChatColor.GREEN + "체력 스탯 " + 1 + "을 추가하였습니다.");
@@ -153,6 +153,10 @@ public class InventoryHandler implements Listener {
     }
 
     private void addDex(Player p) {
+        // 추가할 체력
+        double addedMaxHealth = 1.0;
+        HealthUtils.addMaxHealth(p, addedMaxHealth);
+
         File playerFile = new File(plugin.getDataFolder() + "/userData", p.getName() + ".json");
         if (!playerFile.exists()) {
             return;
@@ -196,6 +200,7 @@ public class InventoryHandler implements Listener {
         int wis = playerData.get("wis").getAsInt();
 
         PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_ATTACK_SPEED, 4.0 + (0.1 * dexterity) + (0.07 * strength) + (0.05 * constitution) + (0.5 * luck));
+        PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_ARMOR, (0.1 * strength) + (0.01 * wis) + (0.5 * luck));
 
         p.sendMessage(ChatColor.GREEN + "행운 스탯 " + 1 + "을 추가하였습니다.");
         plugin.getLogger().info(p.getName() + "님이 행운 스텟을 올렸습니다.");
@@ -203,7 +208,7 @@ public class InventoryHandler implements Listener {
 
     private void addWis(Player p) {
         // 추가할 체력
-        double addedMaxHealth = 2.0;
+        double addedMaxHealth = 1.0;
         HealthUtils.addMaxHealth(p, addedMaxHealth);
         File playerFile = new File(plugin.getDataFolder() + "/userData", p.getName() + ".json");
         if (!playerFile.exists()) {
@@ -223,9 +228,9 @@ public class InventoryHandler implements Listener {
         int wis = playerData.get("wis").getAsInt();
 
         PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_ATTACK_DAMAGE, 1.0 + (0.5 * strength) + (0.1 * wis));
-        PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_ARMOR, (0.25 * strength) + (0.1 * wis));
+        PlayerUtils.modifyPlayerAttribute(p, Attribute.GENERIC_ARMOR, (0.1 * strength) + (0.01 * wis) + (0.5 * luck));
 
-        p.sendMessage(ChatColor.GREEN + "행운 지혜 " + 1 + "을 추가하였습니다.");
+        p.sendMessage(ChatColor.GREEN + "지혜 " + 1 + "을 추가하였습니다.");
         plugin.getLogger().info(p.getName() + "님이 지혜 스텟을 올렸습니다.");
     }
 }

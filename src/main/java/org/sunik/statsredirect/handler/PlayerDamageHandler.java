@@ -62,20 +62,25 @@ public class PlayerDamageHandler implements Listener {
                 File playerFile = new File(plugin.getDataFolder() + "/userData", shooter.getName() + ".json");
                 JsonObject playerData = JsonParseUtils.loadPlayerData(playerFile, new Gson());
                 // 확률 계산이 0~1 이기에 0.001 = 0.1% 이다.
-                double criticalPercentage = 0.005 * playerData.get("luck").getAsInt();
+                double criticalPercentage = 0.01 * playerData.get("luck").getAsInt();
+                // 이벤트로부터 기본 데미지 값을 가져옵니다.
+                double baseDamage = event.getDamage();
+                // 기본데미지 입력
+                double resultCriticalDamage = baseDamage;
                 // 크리티컬 데미지를 적용할지 여부를 확인합니다.
                 if (shouldDealCriticalDamage(criticalPercentage)) {
-                    // 이벤트로부터 기본 데미지 값을 가져옵니다.
-                    double baseDamage = event.getDamage();
                     double criticalDamage = (((baseDamage * 0.15) * (playerData.get("dex").getAsInt())) +
-                            ((baseDamage * 0.5) * playerData.get("wis").getAsInt()));
+                                            ((baseDamage * 0.5) * playerData.get("wis").getAsInt()));
                     // 크리티컬 데미지를 계산합니다.
-                    double resultCriticalDamage = baseDamage + criticalDamage;
+                    resultCriticalDamage = baseDamage + criticalDamage;
                     // 메시지
                     shooter.sendMessage(ChatColor.YELLOW + "크리티컬!");
                     // 이벤트의 데미지 값을 크리티컬 데미지 값으로 설정합니다.
+                    resultCriticalDamage = headShot(resultCriticalDamage, shooter);
                     event.setDamage(resultCriticalDamage);
                 }
+                resultCriticalDamage = headShot(resultCriticalDamage, shooter);
+                event.setDamage(resultCriticalDamage);
                 // shooter가 활을 가진 플레이어인지 확인하고 처리할 작업을 수행
             }
         } else if (damager instanceof Player) {
@@ -99,6 +104,22 @@ public class PlayerDamageHandler implements Listener {
                 // 이벤트의 데미지 값을 크리티컬 데미지 값으로 설정합니다.
                 event.setDamage(resultCriticalDamage);
             }
+        }
+    }
+
+    /*
+     * 헤드샷 계산을 분리하여 동일 코드에서 불러오기만 하면 되게 작성했습니다.
+     * @param damage - 기본 데미지
+     * @param shooter - 피해를 준 플레이어
+     * @return resultDamage
+     */
+    private Double headShot(double damage, Player shooter) {
+        if (shouldDealCriticalDamage(0.2)) {
+            plugin.getLogger().info("헤드샷!");
+            shooter.sendMessage(ChatColor.RED + "헤드샷!");
+            return damage * 2;
+        } else {
+            return damage;
         }
     }
 
