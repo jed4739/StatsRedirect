@@ -23,7 +23,6 @@ public class InventoryStatsItems {
         lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "체력:") + " " + (ChatColor.WHITE + "5"));
         lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "체력 흡수:") + " " + (ChatColor.WHITE + "0.1% (공격력 0.1%)"));
         lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "넉백 저항:") + " " + (ChatColor.WHITE + "0.0001"));
-        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "공격속도:") + " " + (ChatColor.WHITE + "0.03"));
         lore.add((ChatColor.LIGHT_PURPLE + "현재 스텟: ") + (ChatColor.YELLOW + String.valueOf(con)));
         healthItemMeta.setLore(lore);
         healthItem.setItemMeta(healthItemMeta);
@@ -39,8 +38,7 @@ public class InventoryStatsItems {
         ArrayList<String> lore = new ArrayList<>();
         lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "체력:") + " " + (ChatColor.WHITE + "2"));
         lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "근접 공격력:") + " " + (ChatColor.WHITE + "0.5"));
-        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "방어력:") + " " + (ChatColor.WHITE + "0.1"));
-        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "공격속도:") + " " + (ChatColor.WHITE + "0.07"));
+        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "방어력:") + " " + (ChatColor.WHITE + "0.3"));
         lore.add((ChatColor.LIGHT_PURPLE + "현재 스텟: ") + (ChatColor.YELLOW + String.valueOf(str)));
         strengthItemMeta.setLore(lore);
         strengthItem.setItemMeta(strengthItemMeta);
@@ -74,7 +72,6 @@ public class InventoryStatsItems {
         ArrayList<String> lore = new ArrayList<>();
         lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "근접 치명타 확률:") + " " + (ChatColor.WHITE + "0.3%"));
         lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "원거리 치명타 확률:") + " " + (ChatColor.WHITE + "1%"));
-        lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "공격속도:") + " " + (ChatColor.WHITE + "0.5"));
         lore.add((ChatColor.RED + "+") + (ChatColor.YELLOW + "방어력:") + " " + (ChatColor.WHITE + "0.5"));
         lore.add((ChatColor.LIGHT_PURPLE + "현재 스텟: ") + (ChatColor.YELLOW + String.valueOf(luck)));
         luckItemMeta.setLore(lore);

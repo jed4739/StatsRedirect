@@ -78,6 +78,7 @@ public class PlayerDamageHandler implements Listener {
                     // 이벤트의 데미지 값을 크리티컬 데미지 값으로 설정합니다.
                     resultCriticalDamage = headShot(resultCriticalDamage, shooter);
                     event.setDamage(resultCriticalDamage);
+                    return;
                 }
                 resultCriticalDamage = headShot(resultCriticalDamage, shooter);
                 event.setDamage(resultCriticalDamage);
@@ -91,7 +92,7 @@ public class PlayerDamageHandler implements Listener {
             File playerFile = new File(plugin.getDataFolder() + "/userData", attacker.getName() + ".json");
             JsonObject playerData = JsonParseUtils.loadPlayerData(playerFile, new Gson());
             // 확률 계산이 0~1 이기에 0.001 = 0.1% 이다.
-            double criticalPercentage = 0.007 * playerData.get("luck").getAsInt();
+            double criticalPercentage = 0.003 * playerData.get("luck").getAsInt();
             // 크리티컬 데미지를 적용할지 여부를 확인합니다.
             if (shouldDealCriticalDamage(criticalPercentage)) {
                 // 이벤트로부터 기본 데미지 값을 가져옵니다.
