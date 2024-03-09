@@ -54,6 +54,10 @@ public class CommandService {
         player.openInventory(inventory);
     }
 
+    /**
+     * 스텟 명령어 목록 호출 함수
+     * @param p - 플레이어 객체 ( 주로 명령어를 입력한 사용자가 해당함. )
+     */
     public static void infoMessage(Player p) {
         // Header
         p.sendMessage(ChatColor.BOLD + "" + ChatColor.DARK_AQUA + "============ " + ChatColor.GOLD +

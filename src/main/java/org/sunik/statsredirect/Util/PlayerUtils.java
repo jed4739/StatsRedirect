@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 
+import java.io.File;
 import java.util.UUID;
 
 public class PlayerUtils {

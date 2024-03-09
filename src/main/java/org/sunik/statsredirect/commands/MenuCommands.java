@@ -14,6 +14,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.sunik.statsredirect.Util.HealthUtils;
 import org.sunik.statsredirect.Util.JsonParseUtils;
 import org.sunik.statsredirect.service.CommandService;
+import org.sunik.statsredirect.service.PlayerCommandService;
 
 import java.io.File;
 
@@ -25,89 +26,80 @@ public class MenuCommands implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender instanceof Player) {
-            Player p = (Player) sender;
-            if (label.equalsIgnoreCase("statslist")) {
-                CommandService.infoMessage(p);
-                return true;
-            }
-            if (label.equalsIgnoreCase("status")) {
-                CommandService.status(plugin, p);
-                return true;
-            }
-            if (label.equalsIgnoreCase("level")) {
-                if (args.length > 1 && p.isOp()) {
-                    Player targetPlayer = Bukkit.getPlayer(args[1]);
-                    assert targetPlayer != null;
-                    if (!targetPlayer.isOnline()) {
-                        p.sendMessage(ChatColor.RED + "해당 유저는 접속하고 있지 않습니다.");
-                        return true;
-                    }
-                    if (args.length < 4 && args[0].equals("modify")) {
-                        File playerFile = new File(plugin.getDataFolder() + "/userData", targetPlayer.getName() + ".json");
-                        JsonObject playerData = JsonParseUtils.loadPlayerData(playerFile, new Gson());
-                        playerData.addProperty("level", Integer.parseInt(args[2]));
-                        p.sendMessage((ChatColor.BOLD + targetPlayer.getName()) + "의 레벨 수정 완료");
-                        JsonParseUtils.modifyPlayerData(playerFile, new Gson(), playerData);
+        if (!(sender instanceof Player)) {
+            sender.sendMessage("플레이어만 사용할 수 있는 명령어입니다.");
+            return false;
+        }
+        // 플레이어 객체
+        Player p = (Player) sender;
 
-                    } else if (args.length < 3 && args[0].equals("reset")) {
-                        File playerFile = new File(plugin.getDataFolder() + "/userData", targetPlayer.getName() + ".json");
-                        JsonObject playerData = JsonParseUtils.loadPlayerData(playerFile, new Gson());
-                        playerData.addProperty("level", 0);
-                        p.sendMessage((ChatColor.BOLD + targetPlayer.getName()) + "의 레벨 초기화 완료");
-                        JsonParseUtils.modifyPlayerData(playerFile, new Gson(), playerData);
-                    } else {
-                        CommandService.infoMessage(p);
-                    }
-                    return true;
-                } else {
-                    plugin.getLogger().info(p.getName() + "님이 레벨 명령어 실패!");
-                    CommandService.infoMessage(p);
-                }
-                return true;
-            }
-            if (label.equalsIgnoreCase("stats")) {
-                if (args.length > 1 && p.isOp()) {
-                    if (args[0].equals("reset")) {
-                        if (args.length == 2) {
-                            Player targetPlayer = Bukkit.getPlayer(args[1]);
-                            assert targetPlayer != null;
-                            if (!targetPlayer.isOnline()) {
-                                p.sendMessage(ChatColor.RED + "해당 유저는 접속하고 있지 않습니다.");
-                                return true;
-                            }
-                            CommandService.reset(plugin, targetPlayer, p);
+        // 스텟 목록 명령어
+        if (label.equalsIgnoreCase("statslist")) {
+            CommandService.infoMessage(p);
+            return true;
+        }
+
+        // 스테이터스 명령어
+        if (label.equalsIgnoreCase("status")) {
+            CommandService.status(plugin, p);
+            return true;
+        }
+
+        // 레벨 명령어
+        if (label.equalsIgnoreCase("level")) {
+            PlayerCommandService levelService = new PlayerCommandService(plugin);
+            return levelService.playerLevelCommand(p, args);
+        }
+        
+        // 스텟 명령어
+        if (label.equalsIgnoreCase("stats")) {
+            if (args.length > 1 && p.isOp()) {
+                if (args[0].equals("reset")) {
+                    if (args.length == 2) {
+                        Player targetPlayer = Bukkit.getPlayer(args[1]);
+                        assert targetPlayer != null;
+                        if (!targetPlayer.isOnline()) {
+                            p.sendMessage(ChatColor.RED + "해당 유저는 접속하고 있지 않습니다.");
                             return true;
-                        } else if (args.length == 3) {
-                            Player targetPlayer = Bukkit.getPlayer(args[1]);
-                            assert targetPlayer != null;
-                            CommandService.modifyStatsReset(plugin, targetPlayer, p, args[2]);
-                        } else {
-                            plugin.getLogger().info(p.getName() + "님이 스텟 명령어 실패!");
-                            CommandService.infoMessage(p);
                         }
+                        CommandService.reset(plugin, targetPlayer, p);
+                        return true;
+                    } else if (args.length == 3) {
+                        Player targetPlayer = Bukkit.getPlayer(args[1]);
+                        assert targetPlayer != null;
+                        CommandService.modifyStatsReset(plugin, targetPlayer, p, args[2]);
                     } else {
                         plugin.getLogger().info(p.getName() + "님이 스텟 명령어 실패!");
                         CommandService.infoMessage(p);
                     }
-                    return true;
+                } else {
+                    plugin.getLogger().info(p.getName() + "님이 스텟 명령어 실패!");
+                    CommandService.infoMessage(p);
                 }
-                File playerFile = new File(plugin.getDataFolder() + "/userData", p.getName() + ".json");
-                JsonObject playerData = JsonParseUtils.loadPlayerData(playerFile, new Gson());
-                CommandService.openStatInventory(p, playerData, plugin); // 스탯 가상 인벤토리 열기
-                return true;
             }
-            if (label.equalsIgnoreCase("heal") && p.isOp()) {
+            File playerFile = new File(plugin.getDataFolder() + "/userData", p.getName() + ".json");
+            JsonObject playerData = JsonParseUtils.loadPlayerData(playerFile, new Gson());
+            CommandService.openStatInventory(p, playerData, plugin); // 스탯 가상 인벤토리 열기
+            return true;
+        }
+        
+        // 힐 명령어
+        if (label.equalsIgnoreCase("heal")) {
+            if (p.isOp()) {
+                // OP 권한 있을때
                 HealthUtils.setMaxHealth(p, HealthUtils.getMaxHealth(p));
                 for (PotionEffect effect : p.getActivePotionEffects()) {
                     PotionEffectType type = effect.getType();
                     p.removePotionEffect(type);
                 }
                 return true;
-            } else if (label.equalsIgnoreCase("heal") && !p.isOp()) {
+            } else {
+                // OP 권한 없을 때
                 p.sendMessage("관리자만 사용가능한 명령어 입니다.");
             }
-        } else sender.sendMessage("플레이어만 사용할 수 있는 명령어입니다.");
+        }
+
         return false;
     }
+
 }
