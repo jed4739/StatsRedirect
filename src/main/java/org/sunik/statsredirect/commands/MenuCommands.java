@@ -55,19 +55,18 @@ public class MenuCommands implements CommandExecutor {
         if (label.equalsIgnoreCase("stats")) {
             if (args.length > 1 && p.isOp()) {
                 if (args[0].equals("reset")) {
-                    if (args.length == 2) {
+                    if (args.length == 2 || args.length == 3) {
                         Player targetPlayer = Bukkit.getPlayer(args[1]);
-                        assert targetPlayer != null;
-                        if (!targetPlayer.isOnline()) {
+                        // targetPlayer check
+                        if (targetPlayer == null || !targetPlayer.isOnline()) {
                             p.sendMessage(ChatColor.RED + "해당 유저는 접속하고 있지 않습니다.");
                             return true;
                         }
-                        CommandService.reset(plugin, targetPlayer, p);
-                        return true;
-                    } else if (args.length == 3) {
-                        Player targetPlayer = Bukkit.getPlayer(args[1]);
-                        assert targetPlayer != null;
-                        CommandService.modifyStatsReset(plugin, targetPlayer, p, args[2]);
+                        if (args.length == 2) {
+                            CommandService.reset(plugin, targetPlayer, p);
+                        } else {
+                            CommandService.modifyStatsReset(plugin, targetPlayer, p, args[2]);
+                        }
                     } else {
                         plugin.getLogger().info(p.getName() + "님이 스텟 명령어 실패!");
                         CommandService.infoMessage(p);

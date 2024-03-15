@@ -27,18 +27,11 @@ public class PlayerCommandService {
         }
         Player targetPlayer = Bukkit.getPlayer(args[1]);
 
-        // null 체크
-        if (targetPlayer == null) {
+        // null 체크, 온라인 여부 확인
+        if (targetPlayer == null || !targetPlayer.isOnline()) {
             p.sendMessage(ChatColor.RED + "해당 유저는 접속하고 있지 않습니다.");
             return true;
         }
-
-        // 온라인 여부 확인
-        if (!targetPlayer.isOnline()) {
-            p.sendMessage(ChatColor.RED + "해당 유저는 접속하고 있지 않습니다.");
-            return true;
-        }
-
 
         if (args.length < 4 && args[0].equals("modify")) {
             String playerName = targetPlayer.getName();
