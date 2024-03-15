@@ -31,7 +31,6 @@ public class PlayerDeathHandler implements Listener {
     public void onPlayerResurrection(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
         String playerNm = player.getName();
-        player.sendMessage(playerNm + "님의 경험치 양은 " + player.getExp());
         File playerFile = new File(plugin.getDataFolder() + "/userData", playerNm + ".json");
         if (playerFile.exists()) {
             JsonObject playerData = JsonParseUtils.loadPlayerData(playerFile, gson);
@@ -73,7 +72,7 @@ public class PlayerDeathHandler implements Listener {
         File playerFile = new File(plugin.getDataFolder() + "/userData", player.getName() + ".json");
         if (playerFile.exists()) {
             JsonObject playerData = JsonParseUtils.loadPlayerData(playerFile, gson);
-            float oldXp = playerData.get("xp").getAsFloat();
+            float oldXp = player.getExp();
             if (oldXp != 0) {
                 float xp = oldXp * 0.7f;
                 playerData.addProperty("xp", xp);

@@ -39,6 +39,12 @@ public class MenuCommands implements CommandExecutor {
             return true;
         }
 
+        // 디버깅
+        if (label.equalsIgnoreCase("debug")) {
+
+            return true;
+        }
+
         // 스테이터스 명령어
         if (label.equalsIgnoreCase("status")) {
             CommandService.status(plugin, p);
