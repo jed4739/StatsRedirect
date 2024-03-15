@@ -31,6 +31,7 @@ public class PlayerDeathHandler implements Listener {
     public void onPlayerResurrection(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
         String playerNm = player.getName();
+        player.sendMessage(playerNm + "님의 경험치 양은 " + player.getExp());
         File playerFile = new File(plugin.getDataFolder() + "/userData", playerNm + ".json");
         if (playerFile.exists()) {
             JsonObject playerData = JsonParseUtils.loadPlayerData(playerFile, gson);
@@ -64,7 +65,7 @@ public class PlayerDeathHandler implements Listener {
         // 플레이어 위치에 아이템 생성 및 떨어뜨리기
         ItemStack droppedItem = new ItemStack(Material.PAPER, 1);
         ItemMeta itemMeta = droppedItem.getItemMeta();
-        assert itemMeta != null;
+
         itemMeta.setDisplayName(ChatColor.GREEN + String.valueOf(amount) + ChatColor.YELLOW + "$");
         droppedItem.setItemMeta(itemMeta);
         player.getWorld().dropItemNaturally(player.getLocation(), droppedItem);
